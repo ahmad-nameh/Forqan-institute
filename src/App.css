@@ -1,0 +1,18 @@
+@font-face {}
+
+:root {
+  --color1: #f7ac25;
+  --color2: #e6eef8;
+  --color3: #c5d8dc;
+  --color4: #2bc48a;
+  --color5: #082777;
+  --color6: #174e8e;
+  --color7: #4b93e7;
+  --color8: #9ec3f0;
+}
+body {
+  direction: rtl;
+}
+.container {
+  margin: 0 auto;
+}
