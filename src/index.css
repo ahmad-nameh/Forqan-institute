@@ -5,3 +5,10 @@
 #root {
   position: relative;
 }
+@font-face {
+  font-family: myFirstFont;
+  src: url("./assets/Cairo-VariableFont_slnt,wght.ttf");
+}
+html {
+  font-family: myFirstFont;
+}

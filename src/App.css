@@ -1,5 +1,3 @@
-@font-face {}
-
 :root {
   --color1: #f7ac25;
   --color2: #e6eef8;
@@ -12,7 +10,37 @@
 }
 body {
   direction: rtl;
+  background-color: var(--color2);
 }
 .container {
   margin: 0 auto;
+}
+
+.homeBtn {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  width: 20%;
+  height: 120px;
+  @apply shadow w-56 lg:w-1/4;
+}
+
+.btn.active {
+  @apply border-b border-orange-400 font-bold;
+}
+input {
+  outline: none;
+  margin: 10px !important;
+  padding: 8px 10px !important;
+  @apply border rounded-md shadow;
+}
+.inputPop {
+  width: 70%;
+}
+.inputDivPop {
+  @apply col-span-2 flex justify-between items-center;
 }
