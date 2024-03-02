@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PopUp } from "../Home";
 import { motion } from "framer-motion";
 export default function TeachingReSec() {
