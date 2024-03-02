@@ -1,0 +1,41 @@
+nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: var(--color6);
+    padding-top: 20px;
+    height: 100vh;
+    width: fit-content;
+    text-align: center;
+    letter-spacing: -1.9px;
+    z-index: 1;
+}
+nav a{
+    display: inline-block;
+    font-weight: bold;
+    padding: 13px 10px;
+    color: white;
+    position: relative;
+
+}
+nav a.active , nav a:hover {
+    text-shadow: 0 0 36px white;
+}
+nav a.active::before{
+    content: " ";
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    top: 0px;
+    right:0px;
+    background-color: var(--color1);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+nav .Logo {
+    width: 100px;
+    margin: 0 auto;
+    object-fit: contain;
+}
