@@ -11,7 +11,7 @@
   --color8: #9ec3f0;
 }
 body {
-  direction: rtl;
+  /* direction: rtl; */
 }
 .container {
   margin: 0 auto;
