@@ -8,10 +8,22 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { createContext, useState } from "react";
 import EmpRequest from "./empRequest/EmpRequest";
 import { motion } from "framer-motion";
+
+import { useNavigate } from "react-router-dom";
+
+
 export const PopUp = createContext(null);
 function Home() {
   const [click, setclick] = useState([0, 0, 0, 0]);
   const [tClick, setTClick] = useState([1, 0, 0, 0]);
+
+  const navigate = useNavigate();
+
+  const goToArchiveClick =() => {
+    navigate('/archive')
+  }
+
+
   return (
     <div>
       <div className="home container w-2/3 text-[12px]">
@@ -46,7 +58,7 @@ function Home() {
           </div>
           <div
             className="homeBtn relative cursor-pointer"
-            onClick={() => setclick([1, 0, 0, 1])}
+            onClick={() => goToArchiveClick()}
           >
             <div className="absolute px-9 py-6 -top-4 -left-5 border border-gray-300 rounded-[20px] bg-white shadow">
               <CiCirclePlus size={25} color="gray" />

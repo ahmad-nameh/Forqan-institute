@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./archives.css";
 import DatePiker from "../Date/DatePiker";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -10,6 +11,8 @@ const MainInfoArchive =() => {
 
     const [profilePhoto,setProfilePhoto] = useState(profileimg);
     const [uploadedFileimage, setUploadedFileimage] = useState();
+
+    const navigate = useNavigate();
 
     const photoUpload = (e) =>{
         e.preventDefault();
@@ -30,7 +33,7 @@ const MainInfoArchive =() => {
     return (
         <div className="registeration">
             <div className="container">
-                <span className="arrowBack">
+                <span className="arrowBack" onClick={()=>navigate(-1)}>
                     <ArrowForwardIcon fontSize="small"/>رجوع 
                 </span>
                 

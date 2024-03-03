@@ -58,6 +58,7 @@ input {
     background-color: var(--color2);
     height: 100vh;
     display: flex;
+    direction: ltr !important;
     /* width: 90%;
     height: 100vh;
     background-image: url("../../assets/login1.png"),url("../../assets/login2.png");

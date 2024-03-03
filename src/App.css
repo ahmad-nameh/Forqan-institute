@@ -32,7 +32,7 @@ body {
 .btn.active {
   @apply border-b border-orange-400 font-bold;
 }
-input {
+.teachingReq input {
   outline: none;
   margin: 10px !important;
   padding: 8px 10px !important;
