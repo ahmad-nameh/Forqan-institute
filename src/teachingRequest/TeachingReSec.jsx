@@ -2,11 +2,11 @@ import { useContext, useState } from "react";
 import { PopUp } from "../Home";
 import { motion } from "framer-motion";
 export default function TeachingReSec() {
-  const { setTClick } = useContext(PopUp);
+  const { setTClick, idRq } = useContext(PopUp);
 
   const apiUrl = process.env.REACT_APP_API_URL + "addTeachingRequest";
   const [err, seterr] = useState("");
-
+  console.log(idRq);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const arr = [...e.target];

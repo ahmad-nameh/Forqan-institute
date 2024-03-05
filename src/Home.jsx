@@ -10,19 +10,20 @@ import EmpRequest from "./empRequest/EmpRequest";
 import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
-
+import ShowTeachReq from "./ShowTeachReq";
 
 export const PopUp = createContext(null);
 function Home() {
   const [click, setclick] = useState([0, 0, 0, 0]);
   const [tClick, setTClick] = useState([1, 0, 0, 0]);
+  const [table, setTable] = useState([1, 0, 0, 0]);
+  const [idRq, setidRq] = useState(null);
 
   const navigate = useNavigate();
 
-  const goToArchiveClick =() => {
-    navigate('/archive')
-  }
-
+  const goToArchiveClick = () => {
+    navigate("/archive");
+  };
 
   return (
     <div>
@@ -72,11 +73,20 @@ function Home() {
           </div>
         </div>
         <div className="chooseTable p-2 mx-9 flex gap-12 ">
-          <button className="active btn  ">الوظائف</button>
-          <button className="btn  ">المرشحين</button>
-          <button className="btn  ">عمليات الاعداد</button>
+          <button
+            className={`btn ${table[0] ? "active" : ""}`}
+            onClick={() => setTable([1, 0, 0, 0])}
+          >
+            طلبات التدريس
+          </button>
+          <button
+            className={`btn ${table[1] ? "active" : ""}`}
+            onClick={() => setTable([0, 1, 0, 0])}
+          >
+            طلبات التكليف
+          </button>
         </div>
-        <TableEmp />
+        {table[0] ? <ShowTeachReq /> : table[1] ? <TableEmp /> : null}
       </div>
       {click[0] ? (
         <motion.div
@@ -95,7 +105,9 @@ function Home() {
             >
               <IoIosCloseCircleOutline size={35} />
             </div>
-            <PopUp.Provider value={{ tClick, setTClick, setclick }}>
+            <PopUp.Provider
+              value={{ tClick, setTClick, setclick, idRq, setidRq }}
+            >
               <div className="max-h-[90vh] overflow-auto">
                 {click[1] ? (
                   <TeachingRequest />
