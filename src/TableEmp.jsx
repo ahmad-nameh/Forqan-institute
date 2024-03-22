@@ -1,6 +1,6 @@
 export default function TableEmp() {
   return (
-    <div className="tableEmp bg-white border shadow rounded-[7px] p-10 m-9">
+    <div className="tableEmp bg-white border shadow rounded-[7px] p-10 mx-9">
       <div className="header grid grid-cols-8  py-4">
         <h2></h2>
         <h2></h2>

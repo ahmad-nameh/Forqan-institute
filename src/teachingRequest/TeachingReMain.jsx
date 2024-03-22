@@ -5,7 +5,10 @@ import axios from "axios";
 function TeachingReMain() {
   const apiUrl = process.env.REACT_APP_API_URL + "addTeachingRequest";
   const [err, seterr] = useState("");
-  const { setTClick } = useContext(PopUp);
+  const [nat, setNat] = useState([]);
+  const [ser, setSer] = useState([]);
+  const [ma, setMa] = useState([]);
+  const { setTClick, setidRq } = useContext(PopUp);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,13 +20,34 @@ function TeachingReMain() {
       data[name] = value;
     });
     try {
-      //const response = await axios.post(apiUrl, { ...data });
+      const response = await axios.post(apiUrl, { ...data });
+      setidRq(response.data.added_request_id);
       setTClick([0, 1, 0, 0, 0]);
     } catch (error) {
       console.log(error);
       seterr(error.response.data.message);
     }
   };
+  useEffect(() => {
+    const UrlNat = process.env.REACT_APP_API_URL + "showNats";
+    const UrlSer = process.env.REACT_APP_API_URL + "showStatuses";
+    const UrlMa = process.env.REACT_APP_API_URL + "showMServices";
+    axios
+      .get(UrlNat)
+      .then((response) => response.data)
+      .then((res) => setNat(res.nationalities))
+      .catch((error) => console.log(error));
+    axios
+      .get(UrlSer)
+      .then((response) => response.data)
+      .then((res) => setSer(res.result))
+      .catch((error) => console.log(error));
+    axios
+      .get(UrlMa)
+      .then((response) => response.data)
+      .then((res) => setMa(res.result))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className="container teachingReq p-10 text-center">
@@ -42,12 +66,18 @@ function TeachingReMain() {
               </div>
               <div className="inputDivPop">
                 <label htmlFor="nationality_id">الجنسية</label>
-                <input
-                  className="inputPop"
-                  type="text"
+                <select
+                  className="inputPop border ml-2 rounded-md p-1 "
                   name="nationality_id"
                   id="nationality_id"
-                />
+                >
+                  <option value={""}>اختر الدولة</option>
+                  {nat.map((i) => (
+                    <option key={i.id + i.name} value={i.id}>
+                      {i.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="inputDivPop">
                 <label htmlFor="birth_date">تاريخ الولادة</label>
@@ -110,24 +140,36 @@ function TeachingReMain() {
               </div>
               <div className="inputDivPop">
                 <label htmlFor="military_service_id">الحالة الاجتماعية</label>
-                <input
-                  className="inputPop"
-                  type="text"
+                <select
+                  className="inputPop border ml-2 rounded-md p-1"
                   name="military_service_id"
                   id="military_service_id"
-                />
+                >
+                  <option value={""}>اختر الحالة</option>
+                  {ser.map((i) => (
+                    <option key={i.id} value={i.id}>
+                      {i.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="inputDivPop">
                 <label htmlFor="social_status_id">الخدمة الالزامية</label>
-                <input
-                  className="inputPop"
-                  type="text"
+                <select
+                  className="inputPop border ml-2 rounded-md p-1"
                   name="social_status_id"
                   id="social_status_id"
-                />
+                >
+                  <option value={""}>اختر </option>
+                  {ma.map((i) => (
+                    <option key={i.id} value={i.id}>
+                      {i.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="text-center col-span-2 ">
-                <h2>العنوان بالتفصيل</h2>
+                <h2 className="pt-5">العنوان بالتفصيل</h2>
               </div>
               <div className="inputDivPop">
                 <label htmlFor="address">السكن</label>

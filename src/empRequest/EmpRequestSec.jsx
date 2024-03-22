@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { PopUp } from "../Home";
 
 export default function EmpRequestSec() {
-  const { setTClick } = useContext(PopUp);
-
+  const { setTClick, idRq } = useContext(PopUp);
+  console.log(idRq);
   const SubmitHandel = (e) => {
     e.preventDefault();
     setTClick([0, 0, 1, 0, 0]);
