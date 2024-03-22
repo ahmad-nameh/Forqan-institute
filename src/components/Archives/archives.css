@@ -1,7 +1,7 @@
 .registeration {
     width: calc(100% - 100px);
     margin-right: 100px;
-    padding: 50px 20px;
+    padding: 0 20px;
     background-color: var(--color2);
     font-weight: 500;
     font-size: 18px;
@@ -9,33 +9,40 @@
     unicode-bidi: bidi-override;
     color: var(--color5);
 }
+@media (max-width: 992px) {
+  .registeration {
+    width: 100%;
+    margin: auto;
+  }
+}
 .registeration .container {
     display: flex;
     flex-direction: column;
-    /* width: 90%; */
     margin: 10px auto ;
     font-size: small;
     background: white;
-    padding: 60px 60px;
+    padding: 15px 60px 30px;
     position: relative;
 }
-.registeration .container > div {
+.registeration .container > div.first 
+,.registeration .container > div.second {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap:25px;
     width: 100%;
-    margin-top: 35px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    padding: 10px 20px;
     border: 1px solid #d2d1d1;
     border-radius: 3px;
     position: relative;
     letter-spacing: -0.9px;
 }
 
-.registeration .container .first {
+.registeration .container > div.first {
     width: fit-content;
 }
 
@@ -45,6 +52,11 @@
     grid-gap: 6px 1px;
 
 }
+@media(max-width:1250px) {
+    .second > div {
+        grid-template-columns: 140px auto;
+    }
+}
 .registeration .container  label {
     margin-left: 35px;
 }
@@ -52,6 +64,11 @@
     display: grid;
     grid-template-columns: 100px 250px;
     grid-gap: 6px 1px;
+}
+@media(max-width:1250px) {
+    .first div:nth-child(3) {
+        grid-template-columns: 140px auto;
+    }
 }
 
 .first > p , .second > p {
@@ -82,6 +99,8 @@
 .registeration .container select {
     width: fit-content;
     padding: 0 10px !important;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .registeration .container input[type="radio"] {
@@ -116,3 +135,161 @@
     right: 15px;
     cursor: pointer;
 }
+
+table {
+    border: 1px solid #d2d1d1;
+    border-radius: 10px;
+}
+table textarea {
+    min-height: 25px;
+    max-width: auto;
+    outline: 1px solid #d2d1d1;
+}
+tr {
+    border-bottom: 1px solid #d2d1d1;
+}
+th {
+    border-right: 1px solid #d2d1d1;
+}
+td{
+    border-right: 1px solid #d2d1d1;
+    padding: 7px;
+}
+table  tr:last-of-type td  {
+    padding-bottom: 40px;
+}
+
+table .AddRowButton {
+    display: flex;
+    align-items: center;
+    position: absolute; 
+    bottom: 10px;
+    left: 65px;
+    background-color: #e8e8e8;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.registeration input.submitMainDataArchive {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--color4);
+}
+.next-buttons {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: var(--color6);
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 3px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    position: absolute;
+    left: 3%;
+    bottom: 16px;
+    box-shadow: 0 0 10px var(--color6);
+  }
+  
+  .next-buttons span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .next-buttons span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -20px;
+    transition: 0.5s;
+  }
+  .next-buttons:hover {
+    opacity: 0.9;
+  }
+  .next-buttons:hover span {
+    padding-left: 25px;
+  }
+  
+  .next-buttons:hover span:after {
+    opacity: 1;
+    left: 0;
+  }
+  .coursesQulificationSection {
+    width: 100%;
+    margin: 40px auto auto;
+    padding: 10px 20px;
+    border: 1px solid #d2d1d1;
+    border-radius: 3px;
+    position: relative;
+    letter-spacing: -0.9px;
+    
+  }
+  .coursesQulificationSection> p {
+    position: absolute;
+    top: -22px;
+    right: 20px;
+    text-shadow: 3px 0 10px var(--color6);
+  }
+  .rewardPunishSection {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .rewardPunishSection > div table ,.vacationAbsenseSection > div {
+    position: relative;
+  }
+  .rewardPunishSection > div p {
+    position: absolute;
+    top: -22px;
+    right: 20px;
+    text-shadow: 3px 0 10px var(--color6);
+  }
+  .registeration .container .rewardPunishSection table td textarea,
+  .registeration .container .vacationAbsenseSection table td textarea ,
+  .registeration .container .vacationAbsenseSection table td input 
+  {
+    width: 90px;
+  }
+  .rewardPunishSection table td .datePicker ,
+  .vacationAbsenseSection table td .datePicker {
+    width: 150px;
+  }
+  .vacationAbsenseSection {
+    margin-top: 30px;  
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .vacationAbsenseSection > div {
+    min-width: 500px;
+  }
+.vacationAbsenseSection table{
+    width: 100%;
+    position: relative;
+}
+.vacationAbsenseSection > div {
+    margin-top: 30px;
+}
+  .vacationAbsenseSection > div p{
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .vacationAbsenseSection > div:nth-child(1) p {
+    background-color: var(--color6);
+    color: white;
+  }
+  .vacationAbsenseSection > div:nth-child(2) p {
+    background-color: #c6c6c6;
+    color: var(--color5);
+  }

@@ -20,7 +20,11 @@ function Home() {
   const navigate = useNavigate();
 
   const goToArchiveClick =() => {
-    navigate('/archive')
+    // navigate('/archive',{state:{empid:45}})
+    // navigate('/archive');
+    navigate('/archive',{state:{empid:51}})
+        // navigate('/archive',{state:{empid:52}})
+
   }
 
 
