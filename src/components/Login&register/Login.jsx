@@ -1,285 +1,219 @@
 import React, { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import "../../../website/pages/Login/login.css";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/Logo.png";
-// import { useSignIn } from "react-auth-kit";
-// import axios from "axios";
-
-// import * as React from 'react';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-// import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import axios from "axios";
 
 
-// export default function BasicTextFields() {
-//   return (
-//     <Box
-//       component="form"
-//       sx={{
-//         '& > :not(style)': { m: 1, width: '25ch' },
-//       }}
-//       noValidate
-//       autoComplete="off"
-//     >
-//       <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-//       <TextField id="filled-basic" label="Filled" variant="filled" />
-//       <TextField id="standard-basic" label="Standard" variant="standard" />
-//     </Box>
-//   );
-// }
 
 const Login = () => {
-  let [err, seterr] = useState({});
-  if (err.data) {
-    setTimeout(() => {
-      seterr({});
-    }, 5000);
-  }
 
   const [loginMode,setLoginMode] = useState(true);
 
   const [showPassword, setShowPassword] = React.useState(false);
+
+  const [name , setName] = useState("");
+  const [email ,setemail] = useState("");
+  const [password,setPassword] = useState("");
+  const [error,setError] = useState("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-//   const signIn = useSignIn();
-//   const navigate = useNavigate();
 
-  const handelSubmit = async (e) => {
-    //لمنع تحديث الصفحة عند الارسال
+  const navigate = useNavigate();
+
+  const handleLoginSubmit = async (e) => {
+
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
 
-  //   const response = await axios
-  //     .post(
-  //       "http://127.0.0.1:8000/api/admin/login",
+    try {
+      const response = await axios
+      .post(
+        "http://127.0.0.1:8000/api/login",
+        
+        {
+          headers: {
+            Accept: "application/json",
+          },
+          email: email,
+          password: password,
 
-  //       {
-  //         headers: {
-  //           Accept: "application/json",
-  //         },
-  //         user_name: email,
-  //         password: password,
-  //       }
-  //     )
-  //     .catch((errr) => {
-  //       seterr(errr.response);
-  //     });
-  //   if (
-  //     signIn({
-  //       token: response.data.admin.token,
-  //       expiresIn: 50000,
-  //       tokenType: response.data.admin.admin_type,
-  //       authState: response.data.admin.user_name,
-  //     })
-  //   ) 
+          
+        }
+      )
+      console.log(response);
+      if(response.status===200) {
+        localStorage.setItem("token",response.data.access_token);
+        // console.log(localStorage.getItem("token"));
+        navigate("/");
+      }
+    }
+    catch(error){
+      console.error('Sign-in error:', error.response.data);
+      setError(error.response.data.message);
+    }
   };
+
+  const handleSignupSubmit = async (e) => {
+
+    e.preventDefault();
+
+    try {
+      const response = await axios
+      .post(
+        "http://127.0.0.1:8000/api/register",
+        
+        {
+          headers: {
+            Accept: "application/json",
+          },
+          name: name,
+          email: email,
+          password: password,
+          role_id: 1
+          
+        }
+      )
+      // console.log(response);
+      if(response.status===200) {
+        localStorage.setItem("token",response.data.access_token);
+        // console.log(localStorage.getItem("token"));
+        navigate("/");
+      }
+    }
+    catch(error){
+      console.error('Sign-up error:', error.response.data);
+      setError(error.response.data.message);
+
+    }
+};
+
   return (
     <div className="mainWrap">
-      <div className={loginMode===true ? "container loginM":"container signup"}>
+      <div className={loginMode===true ? "container loginMode":"container signupMode"}>
         <div className="formContainer">
-          <div className="formWrapper" style={{display:"flex"}}>
-              <img src={Logo} alt="" style={{width:"200px",objectFit:"contain"}}/>
-            <div style={{display:"flex",flexDirection:"column",gap:"35px"}} className="user-pass">
+          <div className="formWrapper">
+            <img src={Logo} alt="logo" className="w-52 object-contain"/>
+            <div className="user-data flex flex-col gap-9 relative">
               <div>
-            <button className={loginMode===true ? "clicked":"not-clicked"}onClick={()=>setLoginMode(true)}>Login</button>
-            <button className={loginMode===false ? "clicked":"not-clicked"} onClick={()=>setLoginMode(false)} style={{marginLeft:"30px"}}>Sign Up</button>
-            </div>
+                <button className={loginMode===true ? "clicked":"not-clicked"}
+                  onClick={()=>setLoginMode(true)}
+                  >
+                    Login
+                </button>
+                <button className={loginMode===false ? "clicked ml-8":"not-clicked ml-8"} 
+                  onClick={()=>setLoginMode(false)} 
+                  >
+                    Sign Up
+                </button>
+              </div>
             {loginMode &&
-            <form onSubmit={handelSubmit} style={{display:"flex",flexDirection:"column",gap:"20px",width:"300px",margin:"auto"}}>
-              {/* <input type="text" placeholder="Username"/> */}
-              {/* <Box
-      component="form"
-      sx={{
-        '& > :not(style)': {  },
-      }}
-      noValidate
-      autoComplete="off"
-      size="small"
-    >
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small" /> */}
-
-<Box
-      component="form"
-      sx={{
-        
-        '& .MuiTextField-root': {width:"100%"},
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div style={{borderRadius:"7px"}}>
-        <TextField
-          label="Size"
-          id="outlined-size-small"
-          // defaultValue="Small"
-          size="small"
-          sx={{borderRadius:"7px"}}
-        />
-        
-      </div>
+            <form className="flex flex-col gap-4 w-72" autoComplete="off"
+              onSubmit={handleLoginSubmit}
+            >
       
-    </Box>
-    <FormControl sx={{}} variant="outlined" size="small">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            // color="success"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-              {/* <input type="password" placeholder="Password" /> */}
-              {err.data && (
-                <span style={{ color: "red" }}>{err.data.message}</span>
-              )}
-              {/* <a href="#/">Forgot password?</a> */}
+              <TextField
+                  label="Email"
+                  id="outlined-size-small"
+                  size="small"
+                  sx={{borderRadius:"7px"}}
+                  value={email}
+                  onChange={(e)=>setemail(e.target.value)}
+                  required
+                />
+              <FormControl sx={{}} variant="outlined" size="small">
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        sx={{marginRight:"0px"}}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+              
+              <button type="submit" className="login">Login</button>
             </form>}
 
             {!loginMode &&
-            <form onSubmit={handelSubmit} style={{display:"flex",flexDirection:"column",gap:"20px",width:"300px",margin:"auto"}}>
-              {/* <input type="text" placeholder="Username"/> */}
-              {/* <Box
-      component="form"
-      sx={{
-        '& > :not(style)': {  },
-      }}
-      noValidate
-      autoComplete="off"
-      size="small"
-    >
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small" /> */}
+            <form 
+              className="flex flex-col mx-auto gap-4 w-72"
+              onSubmit={handleSignupSubmit} 
+            >
+              <TextField
+                label="Name"
+                id="outlined-size-small"
+                size="small"
+                sx={{borderRadius:"7px"}}
+                value={name}
+                onChange={(e)=>setName(e.target.value)}
+                required
+                />
+              <TextField
+                label="Email"
+                id="outlined-size-small"
+                size="small"
+                sx={{borderRadius:"7px"}}
+                value={email}
+                onChange={(e)=>setemail(e.target.value)}
+                required
+                />
 
-<Box
-      component="form"
-      sx={{
-        
-        '& .MuiTextField-root': {width:"100%"},
-      }}
-      noValidate
-      autoComplete="off"
-    >
-        <TextField
-          label="Size"
-          id="outlined-size-small"
-          // defaultValue="Small"
-          size="small"
-        />
-        
-        
-      
-    </Box>
-    <Box
-      component="form"
-      sx={{
-        
-        '& .MuiTextField-root': {width:"100%"},
-      }}
-      noValidate
-      autoComplete="off"
-    >
-        <TextField
-          label="Size"
-          id="outlined-size-small"
-          // defaultValue="Small"
-          size="small"
-        />
-        
-        
-      
-    </Box>
-    <Box
-      component="form"
-      sx={{
-        
-        '& .MuiTextField-root': {width:"100%"},
-      }}
-      noValidate
-      autoComplete="off"
-    >
-        <TextField
-          label="Size"
-          id="outlined-size-small"
-          // defaultValue="Small"
-          size="small"
-        />
-        
-        
-      
-    </Box>
-    <FormControl sx={{  }} variant="outlined" size="small">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            // color="success"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-        <FormControl sx={{  }} variant="outlined" size="small">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            // color="success"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-              {/* <input type="password" placeholder="Password" /> */}
-              {err.data && (
-                <span style={{ color: "red" }}>{err.data.message}</span>
-              )}
-              {/* <a href="#/">Forgot password?</a> */}
+              <FormControl sx={{}} variant="outlined" size="small">
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        sx={{marginRight:"0px"}}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+
+              <button className="login">Sign up</button>
             </form>}
-            <button className="login">Login</button>
+            {error && (
+                <span className="text-red-600">{error}</span>
+              )}
           </div>
         </div>
       </div>

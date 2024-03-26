@@ -1,40 +1,84 @@
-nav.asideNav {
+nav {
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
     background-color: var(--color6);
-    padding-top: 20px;
-    height: 100vh;
-    width: fit-content;
     text-align: center;
     letter-spacing: -1.9px;
     z-index: 1;
 }
-nav.asideNav a{
+@media (min-width: 992px) {
+    nav {
+        padding-top: 20px;
+        height: 100vh;
+        width: fit-content;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+}
+@media (max-width: 992px) {
+    nav {
+        flex-direction: row;
+        height: fit-content;
+        width: 100%;
+    }
+}
+nav a {
     font-weight: bold;
     padding: 13px 10px;
     color: white;
     position: relative;
-
 }
-nav.asideNav a.active , nav.asideNav a:hover {
+nav button {
+    padding: 13px 10px;
+    color: white;
+    margin-bottom: 20px;
+}
+@media (max-width: 992px) {
+    nav button {
+        margin-bottom: 0;
+    }
+}
+
+nav a.active , nav a:hover {
     text-shadow: 0 0 36px white;
 }
-nav.asideNav a.active::before{
-    content: " ";
-    position: absolute;
-    width: 8px;
-    height: 100%;
-    top: 0px;
-    right:0px;
-    background-color: var(--color1);
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+@media (min-width: 992px) {
+    nav a , nav button{
+        flex-direction: column;
+    }
+    nav a.active::before{
+        content: " ";
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        top: 0px;
+        right:0px;
+        background-color: var(--color1);
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
 }
-nav.asideNav .Logo {
+@media (max-width: 767px) {
+    nav a span {
+        display: none;
+    }
+}
+@media (max-width: 992px) {
+    a {
+        gap: 15px;
+    }
+    nav a.active {
+        color: var(--color1);
+    }
+}
+nav .Logo {
     width: 100px;
     margin: 0 auto;
     object-fit: contain;
+}
+@media (max-width: 992px) {
+    nav .Logo {
+        width: 65px;
+    }
 }
