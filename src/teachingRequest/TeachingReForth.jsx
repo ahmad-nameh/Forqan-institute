@@ -1,11 +1,33 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PopUp } from "../Home";
 import { motion } from "framer-motion";
-export default function TeachingReForth() {
-  const { setTClick } = useContext(PopUp);
+import axios from "axios";
 
-  const SubmitHandel = (e) => {
+export default function TeachingReForth() {
+  const { setTClick, idRq } = useContext(PopUp);
+
+  const apiUrl = process.env.REACT_APP_API_URL + "addPSub";
+  const [err, seterr] = useState("");
+  const [arrdata, setarrdata] = useState([]);
+  const [value, setValue] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const name = e.target[0].value;
+
+    try {
+      const response = await axios.post(apiUrl, {
+        name: name,
+        request_id: idRq,
+      });
+      setarrdata((i) => [...i, name]);
+      setValue("");
+    } catch (error) {
+      console.log(error);
+      seterr(error.response.data.message);
+    }
+  };
+  const endhandel = () => {
     setTClick([0, 0, 0, 0, 1]);
   };
   return (
@@ -17,20 +39,39 @@ export default function TeachingReForth() {
     >
       <h1 className="text-[20px]">
         المواد التي يستطيع تدريسها خارج الاختصاص وقام بتدريسها
-      </h1>
+      </h1>{" "}
       <form
-        onSubmit={SubmitHandel}
+        onSubmit={handleSubmit}
         action=""
         className="flex bg-white p-10 flex-col text-[13px] justify-center"
       >
-        <div className="">
-          <label htmlFor="toManege">اضافة مادة</label>
-          <input className="w/1/2" type="text" name="" id="toManege" />
-        </div>
-
-        <div className="text-center">
+        <div className="flex items-center justify-center gap-5">
+          <input
+            className="w/1/2"
+            type="text"
+            name="name"
+            id="name"
+            placeholder="اضافة مادة"
+            value={value}
+            onChange={(e) => setValue(e.value)}
+          />
           <button
             type="submit"
+            className="cursor-pointer border-2 rounded-full p-2 "
+          >
+            اضافة
+          </button>
+        </div>
+        <div className="flex gap-4 justify-center text-[20px] mt-5">
+          <h2> المواد الحالية:</h2>
+          {arrdata.map((i) => (
+            <span key={i}>{i}</span>
+          ))}
+        </div>
+        <div className="text-center p-4 mt-10">
+          {err !== "" ? <div className="text-red-400">{err}</div> : null}
+          <button
+            onClick={endhandel}
             className="px-3 py-2 rounded-md bg-green-400 w-[100px] text-white"
           >
             التالي

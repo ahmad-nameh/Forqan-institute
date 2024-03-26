@@ -1,28 +1,34 @@
 import { useContext, useState } from "react";
 import { PopUp } from "../Home";
 import { motion } from "framer-motion";
+import axios from "axios";
+
 export default function TeachingReSec() {
   const { setTClick, idRq } = useContext(PopUp);
 
-  const apiUrl = process.env.REACT_APP_API_URL + "addTeachingRequest";
+  const apiUrl = process.env.REACT_APP_API_URL + "addTCourse";
   const [err, seterr] = useState("");
-  console.log(idRq);
+  const [arrdata, setarrdata] = useState([]);
+  const [value, setValue] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const arr = [...e.target];
-    const data = [{}];
-    arr.map((i) => {
-      const name = i.name;
-      const value = i.value;
-      data[name] = value;
-    });
+    const name = e.target[0].value;
+
     try {
-      //const response = await axios.post(apiUrl, { ...data });
-      setTClick([0, 0, 1, 0, 0]);
+      const response = await axios.post(apiUrl, {
+        name: name,
+        request_id: idRq,
+      });
+      setarrdata((i) => [...i, name]);
+      setValue("");
     } catch (error) {
       console.log(error);
       seterr(error.response.data.message);
     }
+  };
+  const endhandel = () => {
+    setTClick([0, 0, 1, 0, 0]);
   };
   return (
     <motion.div
@@ -37,14 +43,33 @@ export default function TeachingReSec() {
         action=""
         className="flex bg-white p-10 flex-col text-[13px] justify-center"
       >
-        <div className="">
-          <label htmlFor="toManege">اضافة دورة</label>
-          <input className="w/1/2" type="text" name="" id="toManege" />
-        </div>
-
-        <div className="text-center">
+        <div className="flex items-center justify-center gap-5">
+          <input
+            className="w/1/2"
+            type="text"
+            name="name"
+            id="name"
+            placeholder="اضافة دورة"
+            value={value}
+            onChange={(e) => setValue(e.value)}
+          />
           <button
             type="submit"
+            className="cursor-pointer border-2 rounded-full p-2 "
+          >
+            اضافة
+          </button>
+        </div>
+        <div className="flex gap-4 justify-center text-[20px] mt-5">
+          <h2> الدورات الاضافية:</h2>
+          {arrdata.map((i) => (
+            <span key={i}>{i}</span>
+          ))}
+        </div>
+        <div className="text-center p-4 mt-10">
+          {err !== "" ? <div className="text-red-400">{err}</div> : null}
+          <button
+            onClick={endhandel}
             className="px-3 py-2 rounded-md bg-green-400 w-[100px] text-white"
           >
             التالي

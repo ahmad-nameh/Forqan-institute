@@ -1,11 +1,39 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PopUp } from "../Home";
 import { motion } from "framer-motion";
-export default function TeachingReExp() {
-  const { setTClick, setclick } = useContext(PopUp);
+import axios from "axios";
 
-  const SubmitHandel = (e) => {
+export default function TeachingReExp() {
+  const { setTClick, idRq, setclick } = useContext(PopUp);
+
+  const apiUrl = process.env.REACT_APP_API_URL + "addTexp";
+  const [err, seterr] = useState("");
+  const [arrdata, setarrdata] = useState([]);
+  const [value, setValue] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const arr = [...e.target];
+    const data = [{}];
+    arr.map((i) => {
+      const name = i.name;
+      const value = i.value;
+      data[name] = value;
+    });
+
+    try {
+      const response = await axios.post(apiUrl, {
+        ...data,
+        request_id: idRq,
+      });
+      setarrdata((i) => [i + 1]);
+      setValue("");
+    } catch (error) {
+      console.log(error);
+      seterr(error.response.data.message);
+    }
+  };
+  const endhandel = () => {
     setTClick([1, 0, 0, 0, 0]);
     setclick([0, 0, 0, 0]);
   };
@@ -16,42 +44,72 @@ export default function TeachingReExp() {
       transition={{ duration: 0.3, delay: 0.1 }}
       className="container teachingReq p-10 text-center"
     >
-      <h1 className="text-[20px]">الخبرات</h1>
+      <h1 className="text-[20px]">
+        المواد التي يستطيع تدريسها خارج الاختصاص وقام بتدريسها
+      </h1>{" "}
       <form
-        onSubmit={SubmitHandel}
+        onSubmit={handleSubmit}
         action=""
-        className="flex bg-white p-10 flex-col text-[13px] justify-between"
+        className="flex bg-white p-10 flex-col text-[13px] justify-center"
       >
-        <div className="border p-10  rounded-md  text-right">
+        <div className="border p-10  rounded-md  text-right ">
           <div className="flex flex-col lg:flex-row gap-8 mx-auto">
             <div className="grid grid-cols-2 m-6 lg:w-1/2">
               <div className="inputDivPop">
-                <label htmlFor="toManege">مكان العمل</label>
-                <input className="inputPop" type="text" name="" id="toManege" />
+                <label htmlFor="work">مكان العمل</label>
+                <input className="inputPop" type="text" name="work" id="work" />
               </div>
               <div className="inputDivPop">
-                <label htmlFor="toManege">المادة او العمل</label>
-                <input className="inputPop" type="text" name="" id="toManege" />
+                <label htmlFor="work_place">المادة او العمل</label>
+                <input
+                  className="inputPop"
+                  type="text"
+                  name="work_place"
+                  id="work_place"
+                />
               </div>
             </div>
             <div className="grid grid-cols-2 m-6 lg:w-1/2">
               <div className="inputDivPop">
-                <label htmlFor="toManege">من عام</label>
-                <input className="inputPop" type="date" name="" id="toManege" />
+                <label htmlFor="to_date">من عام</label>
+                <input
+                  className="inputPop"
+                  type="date"
+                  name="to_date"
+                  id="to_date"
+                />
               </div>
               <div className="inputDivPop">
-                <label htmlFor="toManege">الى عام</label>
-                <input className="inputPop" type="date" name="" id="toManege" />
+                <label htmlFor="from_date">الى عام</label>
+                <input
+                  className="inputPop"
+                  type="date"
+                  name="from_date"
+                  id="from_date"
+                />
               </div>
             </div>
           </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="cursor-pointer border-2 rounded-full p-2 "
+            >
+              اضافة
+            </button>
+          </div>
         </div>
-        <div className="text-center">
+        <div className="flex gap-4 justify-center text-[20px] mt-5">
+          <h2> الخبرات المضافة:</h2>
+          {arrdata.length}
+        </div>
+        <div className="text-center p-4 mt-10">
+          {err !== "" ? <div className="text-red-400">{err}</div> : null}
           <button
-            type="submit"
+            onClick={endhandel}
             className="px-3 py-2 rounded-md bg-green-400 w-[100px] text-white"
           >
-            حفظ
+            حفظ{" "}
           </button>
         </div>
       </form>

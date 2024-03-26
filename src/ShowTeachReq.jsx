@@ -38,18 +38,20 @@ export default function ShowTeachReq() {
         <h2>عنوان السكن</h2>
         <h2>الهاتف</h2>
       </div>
-      {data.map((i) => (
-        <div key={i.id} className="header grid grid-cols-8 border-b  py-4">
-          <h2>{i.name}</h2>
-          <h2>{i.academic_qualification}</h2>
-          <h2>{i.issuing_authority}</h2>
-          <h2>{ser[i.social_status_id].name}</h2>
-          <h2>{i.birth_city}</h2>
-          <h2>{i.birth_date}</h2>
-          <h2>{i.address}</h2>
-          <h2>{i.mobile_num}</h2>
-        </div>
-      ))}
+      {data.map((i, ii) =>
+        ii < 5 ? (
+          <div key={i.id} className="header grid grid-cols-8 border-b  py-4">
+            <h2>{i.name}</h2>
+            <h2>{i.academic_qualification}</h2>
+            <h2>{i.issuing_authority}</h2>
+            <h2>{ser[i.social_status_id].name}</h2>
+            <h2>{i.birth_city}</h2>
+            <h2>{i.birth_date}</h2>
+            <h2>{i.address}</h2>
+            <h2>{i.mobile_num}</h2>
+          </div>
+        ) : null
+      )}
     </div>
   );
 }
