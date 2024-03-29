@@ -7,7 +7,7 @@ export default function ShowTeachReq() {
 
   useEffect(() => {
     const Url = process.env.REACT_APP_API_URL + "showTreqs";
-    const token = process.env.TOKEN_API;
+    const token = localStorage.getItem("token");
     axios
       .get(Url, {
         headers: {

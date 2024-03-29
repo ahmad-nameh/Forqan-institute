@@ -1,25 +1,30 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PopUp } from "../Home";
 import axios from "axios";
 function EmpRequestMain() {
-  const { setTClick } = useContext(PopUp);
-
   const apiUrl = process.env.REACT_APP_API_URL + "addEmpRequest";
   const [err, seterr] = useState("");
+  const [nat, setNat] = useState([]);
+  const [ser, setSer] = useState([]);
+  const [ma, setMa] = useState([]);
+  const { setTClick, setidRq } = useContext(PopUp);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const arr = [...e.target];
-    const formData = new FormData();
+
     const data = [{}];
-    arr.map((i) => {
+    arr.map((i, ii) => {
       const name = i.name;
       const value = i.value;
-      data[name] = value;
+      console.log(ii);
+      if (ii < 10) data[name] = value;
+      else if (ii < 12) {
+        const file = e.target[ii].files[0];
+        data[name] = file;
+      }
     });
-
-    const file = data["certificate_photo"];
-    formData.append("file", file);
+    console.log(data);
     const config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -30,16 +35,37 @@ function EmpRequestMain() {
         apiUrl,
         {
           ...data,
-          certificate_photo: formData.get("file"),
         },
         config
       );
+
+      setidRq(response.data.added_request_id);
       setTClick([0, 1, 0, 0, 0]);
     } catch (error) {
       console.log(error);
       seterr(error.response.data.message);
     }
   };
+  useEffect(() => {
+    const UrlNat = process.env.REACT_APP_API_URL + "showNats";
+    const UrlSer = process.env.REACT_APP_API_URL + "showStatuses";
+    const UrlMa = process.env.REACT_APP_API_URL + "showMServices";
+    axios
+      .get(UrlNat)
+      .then((response) => response.data)
+      .then((res) => setNat(res.nationalities))
+      .catch((error) => console.log(error));
+    axios
+      .get(UrlSer)
+      .then((response) => response.data)
+      .then((res) => setSer(res.result))
+      .catch((error) => console.log(error));
+    axios
+      .get(UrlMa)
+      .then((response) => response.data)
+      .then((res) => setMa(res.result))
+      .catch((error) => console.log(error));
+  }, []);
   return (
     <div className="container teachingReq p-10 text-center">
       <h1>طلب تكليف بعمل إداري</h1>
@@ -64,22 +90,34 @@ function EmpRequestMain() {
               />
             </div>
             <div className="inputDivPop">
-              <label htmlFor="social_status_id">الحالة الاجتماعية</label>
-              <input
-                className="inputPop"
-                type="text"
-                name="social_status_id"
-                id="social_status_id"
-              />
-            </div>
-            <div className="inputDivPop">
-              <label htmlFor="military_service_id">الخدمة الالزامية</label>
-              <input
-                className="inputPop"
-                type="text"
+              <label htmlFor="military_service_id">الحالة الاجتماعية</label>
+              <select
+                className="inputPop border ml-2 rounded-md p-1"
                 name="military_service_id"
                 id="military_service_id"
-              />
+              >
+                <option value={""}>اختر الحالة</option>
+                {ser.map((i) => (
+                  <option key={i.id} value={i.id}>
+                    {i.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="inputDivPop">
+              <label htmlFor="social_status_id">الخدمة الالزامية</label>
+              <select
+                className="inputPop border ml-2 rounded-md p-1"
+                name="social_status_id"
+                id="social_status_id"
+              >
+                <option value={""}>اختر </option>
+                {ma.map((i) => (
+                  <option key={i.id} value={i.id}>
+                    {i.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="inputDivPop">
               <label htmlFor="address">العنوان بالتفصيل</label>
