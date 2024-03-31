@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
 import ShowTeachReq from "./ShowTeachReq";
+import ShowEmp from "./ShowEmp";
 
 export const PopUp = createContext(null);
 function Home() {
@@ -22,10 +23,7 @@ function Home() {
   const navigate = useNavigate();
 
   const goToArchiveClick = () => {
-    // navigate('/archive',{state:{empid:45}})
     navigate("/archive");
-    //navigate("/archive", { state: { empid: 51 } });
-    // navigate('/archive',{state:{empid:52}})
   };
 
   return (
@@ -88,8 +86,17 @@ function Home() {
           >
             طلبات التكليف
           </button>
+          <button
+            className={`btn ${table[2] ? "active" : ""}`}
+            onClick={() => setTable([0, 0, 1, 0])}
+          >
+            الموظفين
+          </button>
         </div>
-        {table[0] ? <ShowTeachReq /> : table[1] ? <TableEmp /> : null}
+        {table[0] ? <ShowTeachReq /> : 
+          table[1] ? <TableEmp /> :
+          table[2] ? <ShowEmp/> :
+          null}
       </div>
       {click[0] ? (
         <motion.div
