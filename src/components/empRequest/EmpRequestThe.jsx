@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { PopUp } from "../Home";
+import { PopUp } from "../../Home";
 import { motion } from "framer-motion";
 import axios from "axios";
 
-export default function EmpRequestSec() {
-  const { setTClick, idRq } = useContext(PopUp);
+export default function EmpRequestThe() {
+  const { setTClick, idRq, setclick } = useContext(PopUp);
 
-  const apiUrl = process.env.REACT_APP_API_URL + "addECourse";
+  const apiUrl = process.env.REACT_APP_API_URL + "addEexp";
   const [err, seterr] = useState("");
   const [arrdata, setarrdata] = useState([]);
   const [value, setValue] = useState("");
@@ -28,7 +28,8 @@ export default function EmpRequestSec() {
     }
   };
   const endhandel = () => {
-    setTClick([0, 0, 1, 0, 0]);
+    setTClick([1, 0, 0, 0, 0]);
+    setclick([0, 0, 0, 0]);
   };
   return (
     <motion.div
@@ -37,7 +38,7 @@ export default function EmpRequestSec() {
       transition={{ duration: 0.3, delay: 0.1 }}
       className="container teachingReq p-10 text-center"
     >
-      <h1 className="text-[20px]">مؤهلات إضافية ودورات:</h1>
+      <h1 className="text-[20px]">الخبرات</h1>
       <form
         onSubmit={handleSubmit}
         action=""
@@ -49,7 +50,7 @@ export default function EmpRequestSec() {
             type="text"
             name="name"
             id="name"
-            placeholder="اضافة دورة"
+            placeholder="اضافة خبرة"
             value={value}
             onChange={(e) => setValue(e.value)}
           />
@@ -61,7 +62,7 @@ export default function EmpRequestSec() {
           </button>
         </div>
         <div className="flex gap-4 justify-center text-[20px] mt-5">
-          <h2> الدورات الاضافية:</h2>
+          <h2> الخبرات الحالية:</h2>
           {arrdata.map((i) => (
             <span key={i}>{i}</span>
           ))}

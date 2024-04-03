@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PopUp } from "../Home";
+import { PopUp } from "../../Home";
 import TeachingReMain from "./TeachingReMain";
 import TeachingReSec from "./TeachingReSec";
 import TeachingReThe from "./TeachingReThe";

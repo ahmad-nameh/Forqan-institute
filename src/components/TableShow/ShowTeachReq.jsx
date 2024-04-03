@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useNavigate, useLocation } from "react-router-dom";
 export default function ShowTeachReq() {
   const [data, setdata] = useState([]);
   const [ser, setSer] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const Url = process.env.REACT_APP_API_URL + "showTreqs";
     const token = localStorage.getItem("token");
@@ -26,6 +26,9 @@ export default function ShowTeachReq() {
       .then((res) => setSer(res.result))
       .catch((error) => console.log(error));
   }, []);
+  const showInfo = (id) => {
+    navigate("/showInfo", { state: { id: id } });
+  };
   return (
     <div className="tableEmp bg-white border shadow rounded-[7px] p-10 mx-9">
       <div className="header grid grid-cols-8  py-4 font-bold">
@@ -40,7 +43,11 @@ export default function ShowTeachReq() {
       </div>
       {data.map((i, ii) =>
         ii < 5 ? (
-          <div key={i.id} className="header grid grid-cols-8 border-b  py-4">
+          <div
+            key={i.id}
+            className="header grid grid-cols-8 border-b  py-4 cursor-pointer"
+            onClick={() => showInfo(i.id)}
+          >
             <h2>{i.name}</h2>
             <h2>{i.academic_qualification}</h2>
             <h2>{i.issuing_authority}</h2>

@@ -6,30 +6,23 @@ import Login from "./components/Login&register/Login";
 import MainInfoArchive from "./components/Archives/pages/MainInfoArchive";
 import SubInfoArchive from "./components/Archives/pages/SubInfoAchive";
 import SubInfoArchivePart2 from "./components/Archives/pages/SubInfoArchivePart2";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
-
+import ShowInfo from "./components/TableShow/ShowInfo";
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
-  const isAuthenticated = localStorage.getItem('token');
+  const isAuthenticated = localStorage.getItem("token");
 
-  return isAuthenticated ? (
-    <Component />
-  ) : (
-    <Navigate to="/login" />
-  );
+  return isAuthenticated ? <Component /> : <Navigate to="/login" />;
 };
 
 const App = () => {
-
   return (
     <div>
-  <BrowserRouter>
-        <NavBar/>
+      <BrowserRouter>
+        <NavBar />
         <Routes>
-          <Route path="/" 
-          element={<PrivateRoute element={Home} />}
-          />
+          <Route path="/" element={<PrivateRoute element={Home} />} />
           <Route
             path="/archive"
             element={<PrivateRoute element={MainInfoArchive} />}
@@ -41,6 +34,10 @@ const App = () => {
           <Route
             path="/archive/part3"
             element={<PrivateRoute element={SubInfoArchivePart2} />}
+          />
+          <Route
+            path="/showInfo"
+            element={<PrivateRoute element={ShowInfo} />}
           />
           <Route path="/login" element={<Login />} />
         </Routes>

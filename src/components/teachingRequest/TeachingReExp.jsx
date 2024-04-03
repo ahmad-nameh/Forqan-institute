@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { PopUp } from "../Home";
+import { PopUp } from "../../Home";
 import { motion } from "framer-motion";
 import axios from "axios";
 

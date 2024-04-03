@@ -2,15 +2,15 @@ import img3 from "./assets/3.png";
 import img2 from "./assets/2.png";
 import img1 from "./assets/1.png";
 import { CiCirclePlus } from "react-icons/ci";
-import TableEmp from "./TableEmp";
-import TeachingRequest from "./teachingRequest/TeachingRequest";
+import TableEmp from "./components/TableShow/TableEmp";
+import TeachingRequest from "./components/teachingRequest/TeachingRequest";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { createContext, useState } from "react";
-import EmpRequest from "./empRequest/EmpRequest";
+import EmpRequest from "./components/empRequest/EmpRequest";
 import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
-import ShowTeachReq from "./ShowTeachReq";
+import ShowTeachReq from "./components/TableShow/ShowTeachReq";
 
 export const PopUp = createContext(null);
 function Home() {

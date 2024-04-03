@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { PopUp } from "../Home";
+import { PopUp } from "../../Home";
 import axios from "axios";
 
 function TeachingReMain() {

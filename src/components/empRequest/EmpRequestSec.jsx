@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { PopUp } from "../Home";
+import { PopUp } from "../../Home";
 import { motion } from "framer-motion";
 import axios from "axios";
 
-export default function TeachingReSec() {
+export default function EmpRequestSec() {
   const { setTClick, idRq } = useContext(PopUp);
 
-  const apiUrl = process.env.REACT_APP_API_URL + "addTCourse";
+  const apiUrl = process.env.REACT_APP_API_URL + "addECourse";
   const [err, seterr] = useState("");
   const [arrdata, setarrdata] = useState([]);
   const [value, setValue] = useState("");
