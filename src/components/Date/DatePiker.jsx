@@ -14,11 +14,11 @@ export default function DatePiker({ datee, setDate }) {
     }
     
       const handleDateChange = (newValue) => {
-        console.log(newValue);
+        // console.log(newValue);
         setDate(convertdate(newValue));
         // console.log(Date);
         var formattedDate = convertdate(newValue);
-        console.log(formattedDate);
+        // console.log(formattedDate);
       };
   return (
     <div className='datePicker'>
