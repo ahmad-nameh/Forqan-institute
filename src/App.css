@@ -46,5 +46,5 @@ select {
   @apply col-span-2 flex justify-between items-center;
 }
 .infoShow1 {
-  @apply flex justify-between border border-black rounded-md p-2 m-2;
+  @apply flex justify-between border border-gray-400 rounded-md p-2 m-2;
 }

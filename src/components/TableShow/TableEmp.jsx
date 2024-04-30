@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function TableEmp() {
   const [data, setdata] = useState([]);
   const [ser, setSer] = useState([]);
+  const navigate = useNavigate();
   console.log(data);
   useEffect(() => {
     const Url = process.env.REACT_APP_API_URL + "showEreqs";
@@ -26,6 +28,9 @@ export default function TableEmp() {
       .then((res) => setSer(res.result))
       .catch((error) => console.log(error));
   }, []);
+  const showInfo = (id) => {
+    navigate("/showInfo2", { state: { id: id } });
+  };
   return (
     <div className="tableEmp bg-white border shadow rounded-[7px] p-10 mx-9">
       <div className="header grid grid-cols-8  py-4 font-bold">
@@ -38,20 +43,22 @@ export default function TableEmp() {
         <h2>عنوان السكن</h2>
         <h2>الهاتف</h2>
       </div>
-      {data.map((i, ii) =>
-        ii < 5 ? (
-          <div key={i.id} className="header grid grid-cols-8 border-b  py-4">
-            <h2>{i.name}</h2>
-            <h2>{i.academic_qualification}</h2>
-            <h2>{i.current_work}</h2>
-            <h2>{i.wanted_work}</h2>
-            <h2>{ser[i.social_status_id].name}</h2>
-            <h2>{i.birth_date}</h2>
-            <h2>{i.address}</h2>
-            <h2>{i.mobile_num}</h2>
-          </div>
-        ) : null
-      )}
+      {data.map((i, ii) => (
+        <div
+          key={i.id}
+          className="header grid grid-cols-8 border-b  py-4 cursor-pointer"
+          onClick={() => showInfo(i.id)}
+        >
+          <h2>{i.name}</h2>
+          <h2>{i.academic_qualification}</h2>
+          <h2>{i.current_work}</h2>
+          <h2>{i.wanted_work}</h2>
+          <h2>{ser[i.social_status_id].name}</h2>
+          <h2>{i.birth_date}</h2>
+          <h2>{i.address}</h2>
+          <h2>{i.mobile_num}</h2>
+        </div>
+      ))}
     </div>
   );
 }

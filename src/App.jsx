@@ -9,6 +9,7 @@ import SubInfoArchivePart2 from "./components/Archives/pages/SubInfoArchivePart2
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import ShowInfo from "./components/TableShow/ShowInfo";
+import ShowInfo2 from "./components/TableShow/ShowInfo2";
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -38,6 +39,10 @@ const App = () => {
           <Route
             path="/showInfo"
             element={<PrivateRoute element={ShowInfo} />}
+          />
+          <Route
+            path="/showInfo2"
+            element={<PrivateRoute element={ShowInfo2} />}
           />
           <Route path="/login" element={<Login />} />
         </Routes>
