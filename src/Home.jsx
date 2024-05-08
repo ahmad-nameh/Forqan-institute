@@ -11,7 +11,8 @@ import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
 import ShowTeachReq from "./components/TableShow/ShowTeachReq";
-import ShowEmp from "./ShowEmp";
+import ShowEmp from "./components/TableShow/ShowEmp";
+import ShowJoinToSystemRequest from "./components/TableShow/ShowJoinToSystemRequest ";
 
 export const PopUp = createContext(null);
 function Home() {
@@ -92,6 +93,12 @@ function Home() {
           >
             الموظفين
           </button>
+          <button
+            className={`btn ${table[3] ? "active" : ""}`}
+            onClick={() => setTable([0, 0, 0, 1])}
+          >
+            طلبات الانضمام
+          </button>
         </div>
         {table[0] ? (
           <ShowTeachReq />
@@ -99,7 +106,10 @@ function Home() {
           <TableEmp />
         ) : table[2] ? (
           <ShowEmp />
-        ) : null}
+        ) : table[3] ? (
+          <ShowJoinToSystemRequest />
+        )  
+        : null}
       </div>
       {click[0] ? (
         <motion.div

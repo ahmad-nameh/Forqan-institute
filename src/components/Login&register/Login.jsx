@@ -24,6 +24,7 @@ const Login = () => {
   const [email ,setemail] = useState("");
   const [password,setPassword] = useState("");
   const [error,setError] = useState("");
+  const [message,setMessage] = useState("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -32,6 +33,15 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
+
+  const handleLoginMode = (mode) => {
+    setName("");
+    setemail("");
+    setPassword("");
+    setError("");
+    setMessage("");
+    setLoginMode(mode);
+  }
 
   const handleLoginSubmit = async (e) => {
 
@@ -54,13 +64,23 @@ const Login = () => {
       )
       console.log(response);
       if(response.status===200) {
-        localStorage.setItem("token",response.data.access_token);
+        // localStorage.setItem("token",response.data.access_token);
         // console.log(localStorage.getItem("token"));
-        navigate("/");
+        // navigate("/");
+        setError("")
+        setMessage(response.data.message);
+        if(response.data.access_token) {
+          localStorage.setItem("token",response.data.access_token);
+          console.log(response.data.access_token)
+          response.data.is_manager ? localStorage.setItem("is_manager",response.data.is_manager) : "";
+          navigate("/")
+        }
+        
       }
     }
     catch(error){
-      console.error('Sign-in error:', error.response.data);
+      console.error('Sign-in error:', error);
+      setMessage("");
       setError(error.response.data.message);
     }
   };
@@ -81,24 +101,30 @@ const Login = () => {
           name: name,
           email: email,
           password: password,
-          role_id: 1
+          role_id: 2
           
         }
       )
-      // console.log(response);
+      console.log(response);
       if(response.status===200) {
-        localStorage.setItem("token",response.data.access_token);
+        // localStorage.setItem("token",response.data.access_token);
         // console.log(localStorage.getItem("token"));
-        navigate("/");
+        // navigate("/");
+        setError("")
+        setMessage(response.data.message);
+        
+
       }
     }
     catch(error){
       console.error('Sign-up error:', error.response.data);
+      setMessage("");
       setError(error.response.data.message);
 
     }
 };
-
+console.log(localStorage.getItem("token"))
+console.log(localStorage.getItem("is_manager"))
   return (
     <div className="mainWrap">
       <div className={loginMode===true ? "container loginMode":"container signupMode"}>
@@ -108,12 +134,12 @@ const Login = () => {
             <div className="user-data flex flex-col gap-9 relative">
               <div>
                 <button className={loginMode===true ? "clicked":"not-clicked"}
-                  onClick={()=>setLoginMode(true)}
+                  onClick={()=>handleLoginMode(true)}
                   >
                     Login
                 </button>
                 <button className={loginMode===false ? "clicked ml-8":"not-clicked ml-8"} 
-                  onClick={()=>setLoginMode(false)} 
+                  onClick={()=>handleLoginMode(false)} 
                   >
                     Sign Up
                 </button>
@@ -159,7 +185,6 @@ const Login = () => {
               
               <button type="submit" className="login">Login</button>
             </form>}
-
             {!loginMode &&
             <form 
               className="flex flex-col mx-auto gap-4 w-72"
@@ -214,6 +239,9 @@ const Login = () => {
             {error && (
                 <span className="text-red-600">{error}</span>
               )}
+            {message && (
+              <span className="text-green-600">{message}</span>
+            )}
           </div>
         </div>
       </div>
